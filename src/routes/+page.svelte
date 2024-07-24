@@ -13,6 +13,7 @@
   }
 
   //default values for test purposes
+  //TODO: cant be negative value
   let ingredients = $state<Ingredient[]>([{ name: '', packageCost: 2, packageVolume: 3, recipeVolume: 5 }]);
   let consumables = $state<Consumable[]>([{ name: '', cost: 5 }]);
 
@@ -26,6 +27,14 @@
 
   function addConsumable() {
     consumables.push({ name: '', cost: 0 });
+  }
+
+  function deleteIngredient(index: number) {
+  ingredients.splice(index, 1);
+  }
+
+  function deleteConsumable(index: number) {
+  consumables.splice(index, 1);
   }
 
 
@@ -43,19 +52,23 @@
   <table>
     <thead>
       <tr>
+        <th>#</th>
         <th>Ингредиенты</th>
         <th>Стоимость упаковки</th>
         <th>Объем в упаковке</th>
         <th>Объем в рецепте</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      {#each ingredients as ingredient, i}
+        {#each ingredients as ingredient, i}
         <tr>
+          <td>{i + 1}</td>
           <td><input bind:value={ingredient.name} type="text" /></td>
           <td><input bind:value={ingredient.packageCost} type="number" /></td>
           <td><input bind:value={ingredient.packageVolume} type="number" /></td>
           <td><input bind:value={ingredient.recipeVolume} type="number" /></td>
+          <td><button onclick={() => deleteIngredient(i)}>Delete</button></td>
         </tr>
       {/each}
     </tbody>
@@ -67,20 +80,25 @@
   <table>
     <thead>
       <tr>
+        <th>#</th>
         <th>Расходник</th>
         <th>Стоимость</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      {#each consumables as consumable, i}
+        {#each consumables as consumable, i}
         <tr>
+          <td>{i + 1}</td>
           <td><input bind:value={consumable.name} type="text" /></td>
           <td><input bind:value={consumable.cost} type="number" /></td>
+          <td><button onclick={() => deleteConsumable(i)}>Delete</button></td>
         </tr>
       {/each}
     </tbody>
   </table>
   <button onclick={addConsumable}>Add Consumable</button>
+  
   <p>Стоимость расходников: {consumableTotal.toFixed(2)}</p>
 
   <h2>Себестоимость рецепта: {totalCost.toFixed(2)} ₽</h2>
