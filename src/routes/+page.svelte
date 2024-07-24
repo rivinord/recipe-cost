@@ -37,6 +37,14 @@
   consumables.splice(index, 1);
   }
 
+  function clearIngredients() {
+    ingredients = [{ name: '', packageCost: 0, packageVolume: 0, recipeVolume: 0 }];
+  }
+
+  function clearConsumables() {
+    consumables = [{ name: '', cost: 0 }];
+  }
+
 
 
   $effect(() => {
@@ -73,7 +81,8 @@
       {/each}
     </tbody>
   </table>
-  <button onclick={addIngredient}>Доавить ингредиент</button>
+  <button onclick={addIngredient}>Добавить ингредиент</button>
+  <button onclick={clearIngredients}>Clear</button>
   <p>Общая стоимость ингредиентов: {ingredientTotal.toFixed(2)}</p>
 
   <h2>Расходники</h2>
@@ -97,7 +106,8 @@
       {/each}
     </tbody>
   </table>
-  <button onclick={addConsumable}>Add Consumable</button>
+  <button onclick={addConsumable}>Добавить расходник</button>
+  <button onclick={clearConsumables}>Очистить</button>
   
   <p>Стоимость расходников: {consumableTotal.toFixed(2)}</p>
 
