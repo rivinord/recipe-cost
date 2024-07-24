@@ -12,35 +12,30 @@
     cost: number;
   }
 
-  let ingredients = $state<Ingredient[]>([{ name: '', packageCost: 0, packageVolume: 0, recipeVolume: 0 }]);
-  let consumables = $state<Consumable[]>([{ name: '', cost: 0 }]);
+  //default values for test purposes
+  let ingredients = $state<Ingredient[]>([{ name: '', packageCost: 2, packageVolume: 3, recipeVolume: 5 }]);
+  let consumables = $state<Consumable[]>([{ name: '', cost: 5 }]);
 
   let ingredientTotal = $state(0);
   let consumableTotal = $state(0);
   let totalCost = $state(0);
 
-
-  
-
-  $effect(() => {
-    calculateTotals();
-	});
-
   function addIngredient() {
-    ingredients = [...ingredients, { name: '', packageCost: 0, packageVolume: 0, recipeVolume: 0 }];
-    calculateTotals();
+    ingredients.push({ name: '', packageCost: 0, packageVolume: 0, recipeVolume: 0 });
   }
 
   function addConsumable() {
-    consumables = [...consumables, { name: '', cost: 0 }];
-    calculateTotals();
+    consumables.push({ name: '', cost: 0 });
   }
 
-  function calculateTotals() {
+
+
+  $effect(() => {
     ingredientTotal = ingredients.reduce((sum, ingredient) => sum + (ingredient.packageVolume ? ingredient.packageCost * (ingredient.recipeVolume / ingredient.packageVolume) : 0), 0);
     consumableTotal = consumables.reduce((sum, consumable) => sum + consumable.cost, 0);
     totalCost = ingredientTotal + consumableTotal;
-  }
+	});
+
 </script>
 
 <main>
